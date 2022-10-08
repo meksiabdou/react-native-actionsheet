@@ -1,3 +1,4 @@
-export function multiply(a: number, b: number): Promise<number> {
-  return Promise.resolve(a * b);
-}
+import ActionSheet from './components/ActionSheet';
+export type { ActionSheetProps } from './types/index';
+
+export default ActionSheet;

@@ -1,18 +1,32 @@
 import * as React from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from 'react-native';
+import ActionSheet from '@meksiabdou/react-native-actionsheet';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-actionsheet';
+const options = ['Apple', 'Banana', 'Watermelon', 'Durian'];
+const title = 'Which one do you like ?';
+const message =
+  'In botany, a fruit is the seed-bearing structure in flowering plants (also known as angiosperms) formed from the ovary after flowering.';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+  const colorScheme = useColorScheme();
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <TouchableOpacity style={styles.btn}>
+        <Text style={{ color: '#fff' }}>Action</Text>
+      </TouchableOpacity>
+      <ActionSheet
+        options={options}
+        title={title}
+        message={message}
+        darkMode={colorScheme === 'dark'}
+      />
     </View>
   );
 }
@@ -23,9 +37,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  btn: {
+    backgroundColor: '#000ffc',
+    width: 150,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
