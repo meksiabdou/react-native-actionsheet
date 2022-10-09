@@ -1,6 +1,6 @@
 {
   "name": "@meksiabdou/react-native-actionsheet",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Cross platform ActionSheet",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
