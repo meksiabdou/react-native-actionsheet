@@ -29,6 +29,11 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       CancelComponent,
       darkMode,
       theme,
+      cancelTextStyle,
+      titleTextStyle,
+      messageTextStyle,
+      optionTextStyle,
+      childrenStyles,
       onPress,
     } = props;
 
@@ -95,17 +100,31 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
 
     const Header = (): JSX.Element => {
       if (isValidElement(HeaderComponent)) {
-        return <View style={[Styles.default.header, styles.header]}>{HeaderComponent}</View>;
+        return (
+          <View style={[Styles.default.header, styles.header]}>
+            {HeaderComponent}
+          </View>
+        );
       } else if (title || message) {
         return (
           <View style={[Styles.default.header, styles.header]}>
             {title ? (
-              <Text style={[Styles.default.title, styles.title]}>{title}</Text>
+              <Text
+                style={[Styles.default.title, styles.title, titleTextStyle]}
+              >
+                {title}
+              </Text>
             ) : (
               <View />
             )}
             {message ? (
-              <Text style={[Styles.default.message, styles.message]}>
+              <Text
+                style={[
+                  Styles.default.message,
+                  styles.message,
+                  messageTextStyle,
+                ]}
+              >
                 {message}
               </Text>
             ) : (
@@ -172,7 +191,13 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           <Reanimated.View
             style={[Styles.default.body, stylesTheme.body, styleAnimation]}
           >
-            <View style={[Styles.default.children, stylesTheme.children]}>
+            <View
+              style={[
+                Styles.default.children,
+                stylesTheme.children,
+                childrenStyles,
+              ]}
+            >
               <ViewTop
                 blurType={darkMode ? 'prominent' : 'light'}
                 blurAmount={30}
@@ -191,7 +216,9 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                             <TouchableOpacity
                               key={index}
                               activeOpacity={0.8}
-                              onPress={() => onPress?.({index, element: item})}
+                              onPress={() =>
+                                onPress?.({ index, element: item })
+                              }
                               style={[
                                 Styles.default.optionItem,
                                 styles.optionItem,
@@ -207,6 +234,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                                   style={[
                                     Styles.default.optionItemText,
                                     styles.optionItemText,
+                                    optionTextStyle,
                                   ]}
                                 >
                                   {item}
@@ -227,30 +255,31 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 ]}
               >
                 <View style={[Styles.default.options]}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={hide}
-                    style={[
-                      Styles.default.optionItem,
-                      Styles.default.cancelItem,
-                      styles.optionItem,
-                      stylesTheme.cancelItem,
-                    ]}
-                  >
-                    {isValidElement(CancelComponent) ? (
-                      CancelComponent
-                    ) : (
+                  {isValidElement(CancelComponent) ? (
+                    CancelComponent
+                  ) : (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={hide}
+                      style={[
+                        Styles.default.optionItem,
+                        Styles.default.cancelItem,
+                        styles.optionItem,
+                        stylesTheme.cancelItem,
+                      ]}
+                    >
                       <Text
                         style={[
                           Styles.default.cancelItemText,
                           Styles.default.optionItemText,
                           styles.cancelItemText,
+                          cancelTextStyle,
                         ]}
                       >
                         Cancel
                       </Text>
-                    )}
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
             </View>

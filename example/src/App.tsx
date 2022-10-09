@@ -12,20 +12,32 @@ import ActionSheet, {
 } from '@meksiabdou/react-native-actionsheet';
 
 const options = [
-  'Apple',
-  'Banana',
-  'Watermelon',
+  'Volvo',
+  'Saab',
+  'Mercedes',
   <Text style={{ fontSize: 18, color: 'red', textAlign: 'center' }}>
-    Durian
+    Audi
   </Text>,
 ];
-const title = 'Which one do you like ?';
-const message =
-  'In botany, a fruit is the seed-bearing structure in flowering plants (also known as angiosperms) formed from the ovary after flowering.';
+const title = 'Please choose your favorite car';
+const message = 'Cars list';
 
 export default function App() {
   const colorScheme = useColorScheme();
   const actionSheetRef = React.useRef<ActionSheetRef>(null);
+
+  /*const HeaderComponent = () => {
+    return (
+      <View>
+        <Text>{title}</Text>
+        <Text>{message}</Text>
+      </View>
+    );
+  };*/
+
+  /*const CancelComponent = () => {
+    return (<Text>Cancel</Text>);
+  };*/
 
   return (
     <View style={styles.container}>
@@ -33,7 +45,7 @@ export default function App() {
         style={styles.btn}
         onPress={() => {
           if (actionSheetRef?.current) {
-            actionSheetRef.current.show()
+            actionSheetRef.current.show();
           }
         }}
       >
@@ -45,10 +57,12 @@ export default function App() {
         title={title}
         message={message}
         //theme="flat"
+        //HeaderComponent={HeaderComponent()}
+        //CancelComponent={CancelComponent()}
         darkMode={colorScheme === 'dark'}
         onPress={(e) => {
-          actionSheetRef?.current?.hide()
-          console.log(Platform.OS, e)
+          //actionSheetRef?.current?.hide();
+          console.log(Platform.OS, e);
         }}
       />
     </View>

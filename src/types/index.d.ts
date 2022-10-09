@@ -1,5 +1,5 @@
 import type { MutableRefObject, ReactChild, ReactNode } from 'react';
-import type { StyleProp } from 'react-native';
+import type { ViewStyle, TextStyle } from 'react-native';
 
 export interface ActionSheetProps {
   ref?: any;
@@ -8,8 +8,12 @@ export interface ActionSheetProps {
   message?: String | ReactNode;
   theme?: 'flat' | 'ios';
   CancelComponent?: ReactNode;
+  titleTextStyle?: TextStyle;
+  messageTextStyle?: TextStyle;
+  cancelTextStyle?: TextStyle;
+  optionTextStyle?: TextStyle;
   HeaderComponent?: ReactNode;
-  styles?: StyleProp;
+  childrenStyles?: ViewStyle;
   darkMode?: boolean;
   onPress?: (e?: {index : number, element : String | ReactChild}) => void;
 }

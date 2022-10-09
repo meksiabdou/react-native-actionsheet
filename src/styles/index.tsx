@@ -86,7 +86,7 @@ const Styles = {
   }),
   flat: StyleSheet.create({
     body: {
-      bottom : 0,
+      bottom: 0,
     },
     children: {
       paddingHorizontal: 0,
