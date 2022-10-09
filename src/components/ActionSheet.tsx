@@ -74,12 +74,12 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
 
     const show = () => {
       setVisible(true);
-      if (theme === 'ios') {
-        translateY.value = withSpring(0, configSpring);
-        opacity.value = withSpring(0.4, configSpring);
-      } else {
+      if (theme === 'flat') {
         translateY.value = withTiming(0, configTiming);
         opacity.value = withTiming(0.4, configTiming);
+      } else {
+        translateY.value = withSpring(0, configSpring);
+        opacity.value = withSpring(0.4, configSpring);
       }
     };
 
