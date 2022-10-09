@@ -114,7 +114,8 @@ const Styles = {
       color: '#a4a4A4',
     },
     viewTop: {
-      backgroundColor: Platform.OS === 'ios' ? '#DCDCDE55' : '#2C2C2E',
+     //backgroundColor: Platform.OS === 'ios' ? '#DCDCDE55' : '#2C2C2E',
+     backgroundColor : '#2C2C2EEE',
     },
     viewBottom: {
       backgroundColor: '#2C2C2E',
@@ -140,7 +141,8 @@ const Styles = {
       color: '#7c7c7c',
     },
     viewTop: {
-      backgroundColor: Platform.OS === 'ios' ? '#fffb' : '#fffd',
+      // backgroundColor: Platform.OS === 'ios' ? '#fffd' : '#fffd',
+      backgroundColor : '#fffe',
     },
     viewBottom: {
       backgroundColor: '#fff',

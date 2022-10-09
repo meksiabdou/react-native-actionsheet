@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState, isValidElement } from 'react';
 import {
   Modal,
-  Platform,
+  // Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -14,7 +14,7 @@ import Reanimated, {
   runOnJS,
   withTiming,
 } from 'react-native-reanimated';
-import { BlurView } from '@react-native-community/blur';
+// import { BlurView } from '@react-native-community/blur';
 import Styles from '../styles';
 import type { ActionSheetProps, ActionSheetRef } from '../types';
 import useLayout from '../hooks/useLayout';
@@ -162,12 +162,13 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
     }, [theme]);
 
     const ViewTop = (ViewTopProps: any) => {
-      if (Platform.OS === 'android') {
+      /*if (Platform.OS === 'android') {
         delete ViewTopProps?.blurType;
         delete ViewTopProps?.blurAmount;
         return <View {...ViewTopProps} />;
-      }
-      return <BlurView {...ViewTopProps} />;
+      }*/
+      return <View {...ViewTopProps} />;
+      // return <BlurView {...ViewTopProps} />;
     };
 
     return (
@@ -199,8 +200,8 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
               ]}
             >
               <ViewTop
-                blurType={darkMode ? 'prominent' : 'light'}
-                blurAmount={30}
+                //blurType={darkMode ? 'prominent' : 'light'}
+                //blurAmount={30}
                 style={[
                   Styles.default.viewTop,
                   styles.viewTop,
