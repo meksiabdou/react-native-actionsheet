@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   useColorScheme,
+  Platform,
 } from 'react-native';
 import ActionSheet, {
   ActionSheetRef,
@@ -45,7 +46,10 @@ export default function App() {
         message={message}
         //theme="flat"
         darkMode={colorScheme === 'dark'}
-        onPress={() => console.log('on Press')}
+        onPress={(e) => {
+          actionSheetRef?.current?.hide()
+          console.log(Platform.OS, e)
+        }}
       />
     </View>
   );

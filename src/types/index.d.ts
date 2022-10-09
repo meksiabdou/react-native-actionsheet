@@ -11,7 +11,7 @@ export interface ActionSheetProps {
   HeaderComponent?: ReactNode;
   styles?: StyleProp;
   darkMode?: boolean;
-  onPress?: () => void;
+  onPress?: (e?: {index : number, element : String | ReactChild}) => void;
 }
 
 export type ActionSheetRef = {

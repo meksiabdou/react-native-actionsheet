@@ -191,7 +191,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                             <TouchableOpacity
                               key={index}
                               activeOpacity={0.8}
-                              onPress={onPress}
+                              onPress={() => onPress?.({index, element: item})}
                               style={[
                                 Styles.default.optionItem,
                                 styles.optionItem,
