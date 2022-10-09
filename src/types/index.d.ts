@@ -1,4 +1,4 @@
-import type { ReactChild, ReactNode } from 'react';
+import type { MutableRefObject, ReactChild, ReactNode } from 'react';
 import type { StyleProp } from 'react-native';
 
 export interface ActionSheetProps {
@@ -14,9 +14,7 @@ export interface ActionSheetProps {
   onPress?: () => void;
 }
 
-export interface ActionSheetRef {
-  current?: {
-    show?: Function;
-    hide?: Function;
-  }
-}
+export type ActionSheetRef = {
+  show: () => void;
+  hide: () => void;
+} | null;
