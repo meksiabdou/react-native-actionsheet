@@ -43,7 +43,9 @@ export default function App() {
         options={options}
         title={title}
         message={message}
+        //theme="flat"
         darkMode={colorScheme === 'dark'}
+        onPress={() => console.log('on Press')}
       />
     </View>
   );

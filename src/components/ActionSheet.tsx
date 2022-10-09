@@ -1,5 +1,12 @@
 import React, { forwardRef, useEffect, useState, isValidElement } from 'react';
-import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Modal,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Reanimated, {
   useAnimatedStyle,
   useSharedValue,
@@ -21,18 +28,24 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       HeaderComponent,
       CancelComponent,
       darkMode,
+      theme,
       onPress,
     } = props;
 
-    const config = {
+    const configSpring = {
       damping: 15,
       stiffness: 120,
       //duration: 200,
     };
 
+    const configTiming = {
+      duration: 300,
+    };
+
     const { height } = useLayout();
 
     const [styles, setStyles] = useState(Styles.light);
+    const [stylesTheme, setStylesTheme] = useState(Styles.ios);
 
     const translateY = useSharedValue<number>(height);
     const opacity = useSharedValue<number>(0);
@@ -57,19 +70,23 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
 
     const updateVisible = () => {
       setVisible(false);
-    }
+    };
 
     const show = () => {
       setVisible(true);
-      translateY.value = withSpring(0, config);
-      opacity.value = withSpring(0.4, config);
+      if (theme === 'ios') {
+        translateY.value = withSpring(0, configSpring);
+        opacity.value = withSpring(0.4, configSpring);
+      } else {
+        translateY.value = withTiming(0, configTiming);
+        opacity.value = withTiming(0.4, configTiming);
+      }
     };
 
-
     const hide = () => {
-      translateY.value = withTiming(height, {duration : 200}, (isFinished) => {
+      translateY.value = withTiming(height, { duration: 200 }, (isFinished) => {
         if (isFinished) {
-          opacity.value = withSpring(0, config);
+          opacity.value = withSpring(0, configSpring);
           runOnJS(updateVisible)();
         }
       });
@@ -78,14 +95,22 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
 
     const Header = (): JSX.Element => {
       if (isValidElement(HeaderComponent)) {
-        return HeaderComponent as any;
+        return <View style={[Styles.default.header, styles.header]}>{HeaderComponent}</View>;
       } else if (title || message) {
         return (
-          <View style={Styles.default.header}>
-            <Text style={[Styles.default.title, styles.title]}>{title}</Text>
-            <Text style={[Styles.default.message, styles.message]}>
-              {message}
-            </Text>
+          <View style={[Styles.default.header, styles.header]}>
+            {title ? (
+              <Text style={[Styles.default.title, styles.title]}>{title}</Text>
+            ) : (
+              <View />
+            )}
+            {message ? (
+              <Text style={[Styles.default.message, styles.message]}>
+                {message}
+              </Text>
+            ) : (
+              <View />
+            )}
           </View>
         );
       }
@@ -109,58 +134,98 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       }
     }, [darkMode]);
 
+    useEffect(() => {
+      if (theme === 'flat') {
+        setStylesTheme(Styles.flat);
+      } else {
+        setStylesTheme(Styles.ios);
+      }
+    }, [theme]);
+
+    const ViewTop = (ViewTopProps: any) => {
+      if (Platform.OS === 'android') {
+        delete ViewTopProps?.blurType;
+        delete ViewTopProps?.blurAmount;
+        return <View {...ViewTopProps} />;
+      }
+      return <BlurView {...ViewTopProps} />;
+    };
+
     return (
       <Modal
         visible={visible}
         transparent={true}
         animationType={'none'}
-        supportedOrientations={['portrait', 'landscape']}
+        supportedOrientations={[
+          'portrait',
+          'landscape',
+          'landscape-left',
+          'landscape-right',
+          'portrait-upside-down',
+        ]}
         presentationStyle="overFullScreen"
       >
         <Reanimated.View
           style={[Styles.default.overlay, styleAnimationOverlay]}
         />
         <View style={Styles.default.model}>
-          <Reanimated.View style={[Styles.default.body, styleAnimation]}>
-            <View style={Styles.default.children}>
-              <BlurView
+          <Reanimated.View
+            style={[Styles.default.body, stylesTheme.body, styleAnimation]}
+          >
+            <View style={[Styles.default.children, stylesTheme.children]}>
+              <ViewTop
                 blurType={darkMode ? 'prominent' : 'light'}
                 blurAmount={30}
-                style={[Styles.default.viewTop, styles.viewTop]}
+                style={[
+                  Styles.default.viewTop,
+                  styles.viewTop,
+                  stylesTheme.viewTop,
+                ]}
               >
-                <Header />
-                <ScrollView style={[Styles.default.options]}>
-                  {Array.isArray(options)
-                    ? options.map((item, index) => {
-                        return (
-                          <TouchableOpacity
-                            key={index}
-                            activeOpacity={0.8}
-                            onPress={onPress}
-                            style={[
-                              Styles.default.optionItem,
-                              styles.optionItem,
-                            ]}
-                          >
-                            {isValidElement(item) ? (
-                              item
-                            ) : (
-                              <Text
-                                style={[
-                                  Styles.default.optionItemText,
-                                  styles.optionItemText,
-                                ]}
-                              >
-                                {item}
-                              </Text>
-                            )}
-                          </TouchableOpacity>
-                        );
-                      })
-                    : null}
-                </ScrollView>
-              </BlurView>
-              <View style={[Styles.default.viewBottom, styles.viewBottom]}>
+                <View>
+                  <Header />
+                  <ScrollView style={[Styles.default.options]}>
+                    {Array.isArray(options)
+                      ? options.map((item, index) => {
+                          return (
+                            <TouchableOpacity
+                              key={index}
+                              activeOpacity={0.8}
+                              onPress={onPress}
+                              style={[
+                                Styles.default.optionItem,
+                                styles.optionItem,
+                                options.length === index + 1
+                                  ? { borderBottomWidth: 0 }
+                                  : {},
+                              ]}
+                            >
+                              {isValidElement(item) ? (
+                                item
+                              ) : (
+                                <Text
+                                  style={[
+                                    Styles.default.optionItemText,
+                                    styles.optionItemText,
+                                  ]}
+                                >
+                                  {item}
+                                </Text>
+                              )}
+                            </TouchableOpacity>
+                          );
+                        })
+                      : null}
+                  </ScrollView>
+                </View>
+              </ViewTop>
+              <View
+                style={[
+                  Styles.default.viewBottom,
+                  styles.viewBottom,
+                  stylesTheme.viewBottom,
+                ]}
+              >
                 <View style={[Styles.default.options]}>
                   <TouchableOpacity
                     activeOpacity={0.8}
@@ -169,6 +234,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                       Styles.default.optionItem,
                       Styles.default.cancelItem,
                       styles.optionItem,
+                      stylesTheme.cancelItem,
                     ]}
                   >
                     {isValidElement(CancelComponent) ? (
