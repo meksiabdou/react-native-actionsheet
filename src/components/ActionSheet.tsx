@@ -1,12 +1,11 @@
-import React, { forwardRef, useEffect, useState, isValidElement } from 'react';
-import {
-  Modal,
-  // Platform,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {
+  forwardRef,
+  useEffect,
+  useState,
+  isValidElement,
+  useCallback,
+} from 'react';
+import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Reanimated, {
   useAnimatedStyle,
   useSharedValue,
@@ -14,7 +13,6 @@ import Reanimated, {
   runOnJS,
   withTiming,
 } from 'react-native-reanimated';
-// import { BlurView } from '@react-native-community/blur';
 import Styles from '../styles';
 import type { ActionSheetProps, ActionSheetRef } from '../types';
 import useLayout from '../hooks/useLayout';
@@ -29,11 +27,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       CancelComponent,
       darkMode,
       theme,
-      cancelTextStyle,
-      titleTextStyle,
-      messageTextStyle,
-      optionTextStyle,
-      childrenStyles,
+      styles: customStyles,
       onPress,
     } = props;
 
@@ -98,7 +92,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       //setVisible(false);
     };
 
-    const Header = (): JSX.Element => {
+    const Header = useCallback((): JSX.Element => {
       if (isValidElement(HeaderComponent)) {
         return (
           <View style={[Styles.default.header, styles.header]}>
@@ -110,7 +104,11 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           <View style={[Styles.default.header, styles.header]}>
             {title ? (
               <Text
-                style={[Styles.default.title, styles.title, titleTextStyle]}
+                style={[
+                  Styles.default.title,
+                  styles.title,
+                  customStyles?.title,
+                ]}
               >
                 {title}
               </Text>
@@ -122,7 +120,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                 style={[
                   Styles.default.message,
                   styles.message,
-                  messageTextStyle,
+                  customStyles?.message,
                 ]}
               >
                 {message}
@@ -134,7 +132,14 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
         );
       }
       return <View />;
-    };
+    }, [
+      customStyles?.title,
+      customStyles?.message,
+      HeaderComponent,
+      styles,
+      title,
+      styles,
+    ]);
 
     useEffect(() => {
       if (ref) {
@@ -143,7 +148,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           hide,
         };
       }
-    }, [ref]);
+    }, [ref, theme]);
 
     useEffect(() => {
       if (darkMode) {
@@ -196,7 +201,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
               style={[
                 Styles.default.children,
                 stylesTheme.children,
-                childrenStyles,
+                customStyles?.children,
               ]}
             >
               <ViewTop
@@ -235,7 +240,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                                   style={[
                                     Styles.default.optionItemText,
                                     styles.optionItemText,
-                                    optionTextStyle,
+                                    customStyles?.optionText,
                                   ]}
                                 >
                                   {item}
@@ -274,7 +279,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                           Styles.default.cancelItemText,
                           Styles.default.optionItemText,
                           styles.cancelItemText,
-                          cancelTextStyle,
+                          customStyles?.cancelText,
                         ]}
                       >
                         Cancel

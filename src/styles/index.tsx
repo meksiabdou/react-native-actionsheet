@@ -35,7 +35,7 @@ const Styles = {
     body: {
       flex: 1,
       position: 'absolute',
-      bottom: Platform.OS === 'ios' ? 30 : 20,
+      bottom: 0,
       left: 0,
       right: 0,
       zIndex: 9999,
@@ -74,6 +74,7 @@ const Styles = {
     body: {},
     children: {
       paddingHorizontal: 15,
+      paddingBottom: Platform.OS === 'ios' ? 30 : 20,
     },
     viewTop: {
       borderRadius: 10,
@@ -85,11 +86,10 @@ const Styles = {
     cancelItem: {},
   }),
   flat: StyleSheet.create({
-    body: {
-      bottom: 0,
-    },
+    body: {},
     children: {
       paddingHorizontal: 0,
+      paddingBottom: 0,
     },
     viewTop: {
       borderRadius: 0,
@@ -114,8 +114,8 @@ const Styles = {
       color: '#a4a4A4',
     },
     viewTop: {
-     //backgroundColor: Platform.OS === 'ios' ? '#DCDCDE55' : '#2C2C2E',
-     backgroundColor : '#2C2C2EEE',
+      //backgroundColor: Platform.OS === 'ios' ? '#DCDCDE55' : '#2C2C2E',
+      backgroundColor: '#2C2C2EEE',
     },
     viewBottom: {
       backgroundColor: '#2C2C2E',
@@ -142,7 +142,7 @@ const Styles = {
     },
     viewTop: {
       // backgroundColor: Platform.OS === 'ios' ? '#fffd' : '#fffd',
-      backgroundColor : '#fffe',
+      backgroundColor: '#fffe',
     },
     viewBottom: {
       backgroundColor: '#fff',

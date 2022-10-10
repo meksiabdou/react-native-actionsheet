@@ -1,6 +1,13 @@
 import type { MutableRefObject, ReactChild, ReactNode } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
 
+export interface ActionSheetStyles {
+  title?: TextStyle;
+  message?: TextStyle;
+  children?: ViewStyle;
+  optionText?: TextStyle;
+  cancelText?: TextStyle;
+};
 export interface ActionSheetProps {
   ref?: any;
   options?: Array<String | ReactChild>;
@@ -8,14 +15,10 @@ export interface ActionSheetProps {
   message?: String | ReactNode;
   theme?: 'flat' | 'ios';
   CancelComponent?: ReactNode;
-  titleTextStyle?: TextStyle;
-  messageTextStyle?: TextStyle;
-  cancelTextStyle?: TextStyle;
-  optionTextStyle?: TextStyle;
   HeaderComponent?: ReactNode;
-  childrenStyles?: ViewStyle;
+  styles?: ActionSheetStyles;
   darkMode?: boolean;
-  onPress?: (e?: {index : number, element : String | ReactChild}) => void;
+  onPress?: (e?: { index: number; element: String | ReactChild }) => void;
 }
 
 export type ActionSheetRef = {
