@@ -5,7 +5,13 @@ import React, {
   isValidElement,
   useCallback,
 } from 'react';
-import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Modal,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Reanimated, {
   useAnimatedStyle,
   useSharedValue,
@@ -25,6 +31,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       message,
       HeaderComponent,
       CancelComponent,
+      CancelComponentText,
       darkMode,
       theme,
       styles: customStyles,
@@ -189,6 +196,7 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           'portrait-upside-down',
         ]}
         presentationStyle="overFullScreen"
+        onRequestClose={hide}
       >
         <Reanimated.View
           style={[Styles.default.overlay, styleAnimationOverlay]}
@@ -274,16 +282,20 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
                         stylesTheme.cancelItem,
                       ]}
                     >
-                      <Text
-                        style={[
-                          Styles.default.cancelItemText,
-                          Styles.default.optionItemText,
-                          styles.cancelItemText,
-                          customStyles?.cancelText,
-                        ]}
-                      >
-                        Cancel
-                      </Text>
+                      {isValidElement(CancelComponentText) ? (
+                        CancelComponentText
+                      ) : (
+                        <Text
+                          style={[
+                            Styles.default.cancelItemText,
+                            Styles.default.optionItemText,
+                            styles.cancelItemText,
+                            customStyles?.cancelText,
+                          ]}
+                        >
+                          Cancel
+                        </Text>
+                      )}
                     </TouchableOpacity>
                   )}
                 </View>

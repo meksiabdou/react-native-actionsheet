@@ -15,6 +15,7 @@ export interface ActionSheetProps {
   message?: String | ReactNode;
   theme?: 'flat' | 'ios';
   CancelComponent?: ReactNode;
+  CancelComponentText?: ReactNode;
   HeaderComponent?: ReactNode;
   styles?: ActionSheetStyles;
   darkMode?: boolean;
