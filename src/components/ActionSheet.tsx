@@ -308,6 +308,18 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
   }
 );
 
-ActionSheet.defaultProps = {};
+ActionSheet.defaultProps = {
+  CancelComponent: undefined,
+  HeaderComponent: undefined,
+  CancelComponentText: undefined,
+  darkMode: false,
+  message: undefined,
+  title: undefined,
+  onPress: undefined,
+  options: undefined,
+  ref: undefined,
+  styles: undefined,
+  theme: 'ios',
+} as ActionSheetProps;
 
 export default ActionSheet;
