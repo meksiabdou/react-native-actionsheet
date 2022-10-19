@@ -143,18 +143,20 @@ const styles = StyleSheet.create({
 
 ### Switch Props
 
-| name            | type              | default   |
-| --------------- | ----------------- | --------- |
-| ref             | any               | null      |
-| options         | Array             | undefined |
-| onPress         | function          | undefined |
-| title           | string            | undefined |
-| message         | string            | undefined |
-| theme           | string            | ios       |
-| darkMode        | boolean           | false     |
-| styles          | ActionSheetStyles | undefined |
-| CancelComponent | ReactNode         | undefined |
-| HeaderComponent | ReactNode         | undefined |
+| name                        | type              | default   |
+| --------------------------- | ----------------- | --------- |
+| ref                         | any               | null      |
+| options                     | Array             | undefined |
+| onPress                     | function          | undefined |
+| title                       | string            | undefined |
+| message                     | string            | undefined |
+| theme                       | string            | ios       |
+| darkMode                    | boolean           | false     |
+| androidStatusBarTranslucent | boolean           | false     |
+| androidHardwareAccelerated  | boolean           | false     |
+| styles                      | ActionSheetStyles | undefined |
+| CancelComponent             | ReactNode         | undefined |
+| HeaderComponent             | ReactNode         | undefined |
 
 ## Contributing
 

@@ -5,13 +5,7 @@ import React, {
   isValidElement,
   useCallback,
 } from 'react';
-import {
-  Modal,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Reanimated, {
   useAnimatedStyle,
   useSharedValue,
@@ -35,6 +29,8 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
       darkMode,
       theme,
       styles: customStyles,
+      androidStatusBarTranslucent: statusBarTranslucent,
+      androidHardwareAccelerated: hardwareAccelerated,
       onPress,
     } = props;
 
@@ -195,6 +191,8 @@ const ActionSheet = forwardRef<ActionSheetRef, ActionSheetProps>(
           'landscape-right',
           'portrait-upside-down',
         ]}
+        statusBarTranslucent={statusBarTranslucent}
+        hardwareAccelerated={hardwareAccelerated}
         presentationStyle="overFullScreen"
         onRequestClose={hide}
       >

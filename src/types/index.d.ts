@@ -19,6 +19,8 @@ export interface ActionSheetProps {
   HeaderComponent?: ReactNode;
   styles?: ActionSheetStyles;
   darkMode?: boolean;
+  androidStatusBarTranslucent?: boolean;
+  androidHardwareAccelerated?: boolean;
   onPress?: (e?: { index: number; element: String | ReactChild }) => void;
 }
 
